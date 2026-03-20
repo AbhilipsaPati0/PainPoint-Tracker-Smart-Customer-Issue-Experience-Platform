@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PainPoint Tracker – Smart Customer Issue Platform</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%2300c9a7'/><text y='24' x='5' font-size='22'>📍</text></svg>"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet"/>
+  <link href="css/style.css" rel="stylesheet"/>
+</head>
+<body>
+
+<!-- ── NAVBAR ── -->
+<nav class="navbar-custom">
+  <div class="container">
+    <div class="d-flex align-items-center justify-content-between w-100">
+      <a href="index.html" class="navbar-brand-custom">
+        <div class="brand-icon">📍</div>
+        Pain<span class="brand-accent">Point</span>
+      </a>
+      <div class="d-none d-md-flex align-items-center gap-2">
+        <a href="explore.html" class="nav-link-custom">Explore Issues</a>
+        <a href="login.html"    class="nav-link-custom">Login</a>
+        <a href="register.html" class="btn-teal ms-2" style="padding:8px 20px;border-radius:6px;font-family:var(--font-display);font-weight:700;font-size:0.88rem;color:#081a14;">Get Started</a>
+      </div>
+      <!-- Mobile toggle -->
+      <button class="navbar-toggler d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#mobileNav" aria-expanded="false">
+        <i class="bi bi-list" style="color:var(--text-secondary);font-size:1.4rem;"></i>
+      </button>
+    </div>
+    <!-- Mobile menu -->
+    <div class="collapse w-100 mt-3 d-md-none" id="mobileNav">
+      <div class="d-flex flex-column gap-1 pb-2">
+        <a href="explore.html"  class="nav-link-custom">Explore Issues</a>
+        <a href="login.html"    class="nav-link-custom">Login</a>
+        <a href="register.html" class="btn-teal text-center mt-2" style="padding:10px;border-radius:6px;font-family:var(--font-display);font-weight:700;font-size:0.88rem;color:#081a14;">Get Started</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ── HERO SECTION ── -->
+<section class="hero-section">
+  <div class="hero-bg-grid"></div>
+  <div class="hero-bg-orb hero-orb-1"></div>
+  <div class="hero-bg-orb hero-orb-2"></div>
+
+  <div class="container position-relative" style="z-index:1;">
+    <div class="row align-items-center">
+      <!-- Text -->
+      <div class="col-lg-6">
+        <div class="hero-eyebrow fade-in-up">
+          <i class="bi bi-stars"></i>
+          Customer Experience Platform
+        </div>
+        <h1 class="hero-title fade-in-up delay-1">
+          Turn Customer<br>
+          <span class="line-accent">Pain Points</span><br>
+          Into Progress
+        </h1>
+        <p class="hero-subtitle fade-in-up delay-2">
+          A unified platform for reporting, tracking, and resolving customer issues. 
+          Surface insights, close the loop, and build experiences people love.
+        </p>
+        <div class="hero-actions fade-in-up delay-3">
+          <a href="register.html" class="btn-teal" style="padding:13px 28px;font-size:0.95rem;">
+            <i class="bi bi-arrow-right-circle me-2"></i>Start Reporting
+          </a>
+          <a href="explore.html" class="btn-outline-teal" style="padding:12px 28px;font-size:0.95rem;">
+            <i class="bi bi-binoculars me-2"></i>Explore Issues
+          </a>
+        </div>
+        <!-- Social proof -->
+        <div class="d-flex align-items-center gap-16 mt-5 fade-in-up delay-4" style="gap:24px;">
+          <div class="d-flex align-items-center gap-2">
+            <div style="display:flex;gap:-6px;">
+              <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#00c9a7,#6366f1);border:2px solid var(--bg-primary);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;">A</div>
+              <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#f59e0b,#f43f5e);border:2px solid var(--bg-primary);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;margin-left:-8px;">R</div>
+              <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#00c9a7);border:2px solid var(--bg-primary);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;margin-left:-8px;">S</div>
+            </div>
+            <span style="font-size:0.82rem;color:var(--text-muted);">Join 200+ users</span>
+          </div>
+          <div style="width:1px;height:24px;background:var(--border);"></div>
+          <div style="font-size:0.82rem;color:var(--text-muted);">
+            <span style="color:var(--teal);font-weight:700;">98%</span> issues resolved
+          </div>
+          <div style="width:1px;height:24px;background:var(--border);display:none;" class="d-none d-sm-block"></div>
+          <div style="font-size:0.82rem;color:var(--text-muted);" class="d-none d-sm-block">
+            <span style="color:var(--amber);font-weight:700;">4.9★</span> satisfaction
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Visual Panel -->
+      <div class="col-lg-6 d-none d-lg-block">
+        <div class="hero-visual ps-5">
+          <div class="hero-panel">
+            <div class="hero-panel-header">
+              <div class="panel-dots">
+                <div class="panel-dot dot-red"></div>
+                <div class="panel-dot dot-yellow"></div>
+                <div class="panel-dot dot-green"></div>
+              </div>
+              <div class="panel-title-bar"></div>
+              <span style="font-size:0.72rem;color:var(--text-muted);font-family:var(--font-display);">Issues Feed</span>
+            </div>
+
+            <!-- Mini Issue Items -->
+            <div class="mini-issue-item">
+              <div class="mini-issue-icon" style="background:var(--rose-dim);">🐛</div>
+              <div class="mini-issue-body">
+                <div class="mini-issue-title">Checkout button not responding on mobile</div>
+                <div class="mini-issue-sub">Technical · 23 upvotes</div>
+              </div>
+              <span class="badge-status badge-pending" style="font-size:0.65rem;white-space:nowrap;">Pending</span>
+            </div>
+
+            <div class="mini-issue-item">
+              <div class="mini-issue-icon" style="background:var(--amber-dim);">💳</div>
+              <div class="mini-issue-body">
+                <div class="mini-issue-title">Double charged after subscription renewal</div>
+                <div class="mini-issue-sub">Billing · 41 upvotes</div>
+              </div>
+              <span class="badge-status badge-progress" style="font-size:0.65rem;white-space:nowrap;">In Progress</span>
+            </div>
+
+            <div class="mini-issue-item">
+              <div class="mini-issue-icon" style="background:var(--teal-dim);">🎨</div>
+              <div class="mini-issue-body">
+                <div class="mini-issue-title">Dark mode flickers on page load</div>
+                <div class="mini-issue-sub">UX · 17 upvotes</div>
+              </div>
+              <span class="badge-status badge-resolved" style="font-size:0.65rem;white-space:nowrap;">Resolved</span>
+            </div>
+
+            <!-- Stats Row -->
+            <div class="stats-row">
+              <div class="stat-mini">
+                <div class="stat-mini-num" id="hero-stat-total">142</div>
+                <div class="stat-mini-label">Total Issues</div>
+              </div>
+              <div class="stat-mini">
+                <div class="stat-mini-num" style="color:var(--amber);">38</div>
+                <div class="stat-mini-label">In Progress</div>
+              </div>
+              <div class="stat-mini">
+                <div class="stat-mini-num" style="color:var(--teal);">96</div>
+                <div class="stat-mini-label">Resolved</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FEATURES SECTION ── -->
+<section class="features-section">
+  <div class="container">
+    <div class="text-center">
+      <div class="section-label">Platform Features</div>
+      <h2 class="section-title">Everything you need to fix<br>what frustrates customers</h2>
+      <p class="section-subtitle">From issue reporting to resolution — track every step of the customer experience journey.</p>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-4 fade-in-up">
+        <div class="feature-card">
+          <div class="feature-icon-wrap" style="background:var(--teal-dim);">📝</div>
+          <div class="feature-card-title">Smart Issue Reporting</div>
+          <p class="feature-card-desc">Submit issues with category tags, image attachments, and detailed descriptions. Make your voice heard clearly.</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 fade-in-up delay-1">
+        <div class="feature-card">
+          <div class="feature-icon-wrap" style="background:var(--indigo-dim);">🗺️</div>
+          <div class="feature-card-title">Journey Mapping</div>
+          <p class="feature-card-desc">Visualize customer pain points across categories. Understand where the experience breaks down and why.</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 fade-in-up delay-2">
+        <div class="feature-card">
+          <div class="feature-icon-wrap" style="background:var(--amber-dim);">📊</div>
+          <div class="feature-card-title">Admin Analytics</div>
+          <p class="feature-card-desc">Powerful dashboard with charts and metrics. See top pain points, issue categories, and resolution rates at a glance.</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 fade-in-up delay-1">
+        <div class="feature-card">
+          <div class="feature-icon-wrap" style="background:var(--rose-dim);">👆</div>
+          <div class="feature-card-title">Community Upvotes</div>
+          <p class="feature-card-desc">Upvote issues that matter most. Democratic prioritization ensures the biggest problems get solved first.</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 fade-in-up delay-2">
+        <div class="feature-card">
+          <div class="feature-icon-wrap" style="background:var(--teal-dim);">💬</div>
+          <div class="feature-card-title">Live Commenting</div>
+          <p class="feature-card-desc">Discuss issues in real-time. Admins respond directly, creating a transparent resolution thread.</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 fade-in-up delay-3">
+        <div class="feature-card">
+          <div class="feature-icon-wrap" style="background:var(--indigo-dim);">🏷️</div>
+          <div class="feature-card-title">Status Tracking</div>
+          <p class="feature-card-desc">Watch your issue move from Pending → In Progress → Resolved. Real transparency, no black holes.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── HOW IT WORKS ── -->
+<section style="padding:80px 0;background:var(--bg-secondary);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div class="container">
+    <div class="text-center mb-5">
+      <div class="section-label">How It Works</div>
+      <h2 class="section-title" style="margin-bottom:0;">Three steps to resolution</h2>
+    </div>
+    <div class="row g-4 align-items-start">
+      <div class="col-md-4 text-center">
+        <div style="width:56px;height:56px;border-radius:16px;background:var(--teal-dim);border:1px solid var(--teal-mid);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:1.4rem;font-weight:800;color:var(--teal);margin:0 auto 20px;">1</div>
+        <h4 style="font-family:var(--font-display);font-size:1.1rem;margin-bottom:10px;">Report Your Issue</h4>
+        <p style="color:var(--text-secondary);font-size:0.9rem;line-height:1.7;">Fill in the issue title, select a category, describe the pain point in detail, and optionally attach an image.</p>
+      </div>
+      <div class="col-md-4 text-center">
+        <div style="width:56px;height:56px;border-radius:16px;background:var(--indigo-dim);border:1px solid rgba(99,102,241,0.3);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:1.4rem;font-weight:800;color:var(--indigo);margin:0 auto 20px;">2</div>
+        <h4 style="font-family:var(--font-display);font-size:1.1rem;margin-bottom:10px;">Community Validates</h4>
+        <p style="color:var(--text-secondary);font-size:0.9rem;line-height:1.7;">Other users upvote and comment on your issue. Popular problems rise to the top, grabbing admin attention fast.</p>
+      </div>
+      <div class="col-md-4 text-center">
+        <div style="width:56px;height:56px;border-radius:16px;background:var(--amber-dim);border:1px solid rgba(245,158,11,0.3);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:1.4rem;font-weight:800;color:var(--amber);margin:0 auto 20px;">3</div>
+        <h4 style="font-family:var(--font-display);font-size:1.1rem;margin-bottom:10px;">Admin Resolves</h4>
+        <p style="color:var(--text-secondary);font-size:0.9rem;line-height:1.7;">Admins triage, update status, and respond. You get notified when your issue moves to resolution.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA SECTION ── -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-box">
+      <h2 class="cta-title">Ready to make your voice heard?</h2>
+      <p class="cta-subtitle">Join the platform where customer feedback actually drives change.</p>
+      <div class="d-flex gap-3 justify-content-center flex-wrap">
+        <a href="register.html" class="btn-teal" style="padding:14px 32px;font-size:1rem;">
+          <i class="bi bi-person-plus me-2"></i>Create Free Account
+        </a>
+        <a href="explore.html" class="btn-ghost" style="padding:13px 32px;font-size:1rem;">
+          <i class="bi bi-eye me-2"></i>Browse Issues
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer class="footer-custom">
+  <div class="container">
+    <div class="row align-items-center justify-content-between">
+      <div class="col-md-4 mb-3 mb-md-0">
+        <div class="footer-brand d-flex align-items-center gap-2">
+          <div class="brand-icon" style="width:28px;height:28px;font-size:13px;">📍</div>
+          Pain<span style="color:var(--teal);">Point</span> Tracker
+        </div>
+        <p class="footer-text mt-2">Smart Customer Issue & Experience Platform</p>
+      </div>
+      <div class="col-md-4 text-md-center mb-3 mb-md-0">
+        <p class="footer-text">CXD Project — Customer Experience Design</p>
+      </div>
+      <div class="col-md-4 text-md-end">
+        <ul class="footer-links justify-content-md-end">
+          <li><a href="explore.html">Explore</a></li>
+          <li><a href="submit.html">Submit</a></li>
+          <li><a href="dashboard.html">Dashboard</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Toast Container for JS notifications -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="js/firebase-config.js"></script>
+<script src="js/auth.js"></script>
+</body>
+</html>

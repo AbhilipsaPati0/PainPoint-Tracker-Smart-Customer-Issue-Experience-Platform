@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register — PainPoint Tracker</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%2300c9a7'/><text y='24' x='5' font-size='22'>📍</text></svg>"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet"/>
+  <link href="css/style.css" rel="stylesheet"/>
+</head>
+<body>
+
+<div class="auth-bg-orb" style="background:radial-gradient(circle,rgba(99,102,241,0.14),transparent 70%);"></div>
+<div class="auth-bg-orb-2"></div>
+
+<!-- ── NAVBAR ── -->
+<nav class="navbar-custom">
+  <div class="container">
+    <a href="index.html" class="navbar-brand-custom">
+      <div class="brand-icon">📍</div>
+      Pain<span class="brand-accent">Point</span>
+    </a>
+    <a href="login.html" class="btn-ghost" style="font-size:0.85rem;">Already have an account? Log in →</a>
+  </div>
+</nav>
+
+<!-- ── AUTH WRAPPER ── -->
+<div class="auth-wrapper" style="padding:40px 20px;">
+  <div class="auth-card fade-in-up" style="max-width:520px;">
+
+    <!-- Logo -->
+    <div class="auth-logo">
+      <div class="auth-logo-icon">📍</div>
+      <span class="auth-logo-name">PainPoint Tracker</span>
+    </div>
+
+    <!-- Heading -->
+    <h1 class="auth-title">Create your account</h1>
+    <p class="auth-subtitle">Join the platform and start reporting customer pain points.</p>
+
+    <!-- Alert container -->
+    <div id="registerAlert" class="d-none" role="alert" style="background:var(--rose-dim);border:1px solid var(--rose);border-radius:var(--radius-sm);padding:12px 16px;font-size:0.88rem;color:var(--rose);margin-bottom:20px;display:flex;align-items:center;gap:8px;">
+      <i class="bi bi-exclamation-triangle-fill"></i>
+      <span id="registerAlertMsg">Something went wrong. Please try again.</span>
+    </div>
+
+    <!-- Success Alert -->
+    <div id="registerSuccess" class="d-none" style="background:var(--teal-dim);border:1px solid var(--teal-mid);border-radius:var(--radius-sm);padding:12px 16px;font-size:0.88rem;color:var(--teal);margin-bottom:20px;display:flex;align-items:center;gap:8px;">
+      <i class="bi bi-check-circle-fill"></i>
+      <span>Account created! Redirecting to explore...</span>
+    </div>
+
+    <!-- Register Form -->
+    <form id="registerForm" novalidate>
+
+      <!-- Full Name -->
+      <div class="form-group-custom">
+        <label class="form-label-custom" for="registerName">Full Name</label>
+        <input
+          type="text"
+          id="registerName"
+          name="fullName"
+          class="form-control-custom"
+          placeholder="Jane Doe"
+          required
+          autocomplete="name"
+        />
+      </div>
+
+      <!-- Email -->
+      <div class="form-group-custom">
+        <label class="form-label-custom" for="registerEmail">Email Address</label>
+        <input
+          type="email"
+          id="registerEmail"
+          name="email"
+          class="form-control-custom"
+          placeholder="jane@example.com"
+          required
+          autocomplete="email"
+        />
+        <div class="form-hint" id="registerEmailHint"></div>
+      </div>
+
+      <!-- Role -->
+      <div class="form-group-custom">
+        <label class="form-label-custom" for="registerRole">I am a</label>
+        <select id="registerRole" name="role" class="form-control-custom">
+          <option value="user">Customer / Student</option>
+          <option value="admin">Admin (requires approval)</option>
+        </select>
+        <div class="form-hint">Admins can manage issue statuses and view analytics.</div>
+      </div>
+
+      <!-- Password -->
+      <div class="form-group-custom">
+        <label class="form-label-custom" for="registerPassword">Password</label>
+        <div style="position:relative;">
+          <input
+            type="password"
+            id="registerPassword"
+            name="password"
+            class="form-control-custom"
+            placeholder="Create a strong password"
+            required
+            autocomplete="new-password"
+            style="padding-right:42px;"
+          />
+          <span class="toggle-icon" id="toggleRegPwd" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--text-muted);cursor:pointer;font-size:15px;transition:var(--transition);">
+            <i class="bi bi-eye"></i>
+          </span>
+        </div>
+        <!-- Password Strength Meter -->
+        <div id="passwordStrengthWrap" class="mt-2 d-none">
+          <div style="height:4px;background:var(--border);border-radius:2px;overflow:hidden;">
+            <div id="passwordStrengthBar" style="height:100%;width:0%;border-radius:2px;transition:all 0.3s ease;background:var(--rose);"></div>
+          </div>
+          <div id="passwordStrengthText" class="form-hint mt-1">Too weak</div>
+        </div>
+      </div>
+
+      <!-- Confirm Password -->
+      <div class="form-group-custom">
+        <label class="form-label-custom" for="registerConfirmPassword">Confirm Password</label>
+        <div style="position:relative;">
+          <input
+            type="password"
+            id="registerConfirmPassword"
+            name="confirmPassword"
+            class="form-control-custom"
+            placeholder="Repeat your password"
+            required
+            autocomplete="new-password"
+            style="padding-right:42px;"
+          />
+          <span class="toggle-icon" id="toggleConfirmPwd" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--text-muted);cursor:pointer;font-size:15px;transition:var(--transition);">
+            <i class="bi bi-eye"></i>
+          </span>
+        </div>
+        <div class="form-hint" id="passwordMatchHint"></div>
+      </div>
+
+      <!-- Terms & Conditions -->
+      <div class="d-flex align-items-start gap-2 mb-4">
+        <input
+          type="checkbox"
+          id="agreeTerms"
+          name="agreeTerms"
+          required
+          style="width:16px;height:16px;accent-color:var(--teal);cursor:pointer;margin-top:3px;flex-shrink:0;"
+        />
+        <label for="agreeTerms" style="font-size:0.85rem;color:var(--text-secondary);cursor:pointer;margin:0;line-height:1.5;">
+          I agree to the <a href="#" style="color:var(--teal);">Terms of Service</a> and
+          <a href="#" style="color:var(--teal);">Privacy Policy</a>. My data may be used to improve the platform experience.
+        </label>
+      </div>
+
+      <!-- Submit -->
+      <button type="submit" id="registerBtn" class="btn-teal w-100" style="padding:13px;font-size:0.95rem;">
+        <span id="registerBtnText"><i class="bi bi-person-plus me-2"></i>Create Account</span>
+        <span id="registerBtnLoading" class="d-none">
+          <span class="spinner" style="width:18px;height:18px;border-width:2px;display:inline-block;vertical-align:middle;margin-right:8px;"></span>Creating account...
+        </span>
+      </button>
+
+    </form>
+
+    <!-- Divider -->
+    <div class="auth-divider">or sign up with</div>
+
+    <!-- Google -->
+    <button id="googleRegisterBtn" class="btn-ghost w-100" style="padding:12px;justify-content:center;display:flex;align-items:center;gap:10px;font-size:0.9rem;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+        <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+        <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+        <path d="M5.84 14.1c-.22-.66-.35-1.36-.35-2.1s.13-1.44.35-2.1V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.61z" fill="#FBBC05"/>
+        <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+      </svg>
+      Sign up with Google
+    </button>
+
+    <!-- Footer -->
+    <p class="auth-footer-text">
+      Already have an account? <a href="login.html">Log in →</a>
+    </p>
+
+  </div>
+</div>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="js/firebase-config.js"></script>
+<script src="js/auth.js"></script>
+<script>
+  // Password visibility toggles
+  function togglePwd(toggleId, inputId) {
+    $('#' + toggleId).on('click', function() {
+      const input = $('#' + inputId);
+      const icon  = $(this).find('i');
+      if (input.attr('type') === 'password') {
+        input.attr('type', 'text');
+        icon.removeClass('bi-eye').addClass('bi-eye-slash');
+      } else {
+        input.attr('type', 'password');
+        icon.removeClass('bi-eye-slash').addClass('bi-eye');
+      }
+    });
+  }
+  togglePwd('toggleRegPwd',     'registerPassword');
+  togglePwd('toggleConfirmPwd', 'registerConfirmPassword');
+
+  // Password strength meter
+  $('#registerPassword').on('input', function() {
+    const val = $(this).val();
+    if (!val) { $('#passwordStrengthWrap').addClass('d-none'); return; }
+    $('#passwordStrengthWrap').removeClass('d-none');
+
+    let score = 0;
+    if (val.length >= 8)  score++;
+    if (/[A-Z]/.test(val)) score++;
+    if (/[0-9]/.test(val)) score++;
+    if (/[^A-Za-z0-9]/.test(val)) score++;
+
+    const levels = [
+      { w: '25%',  color: 'var(--rose)',   label: 'Too weak' },
+      { w: '50%',  color: 'var(--amber)',  label: 'Fair' },
+      { w: '75%',  color: 'var(--indigo)', label: 'Good' },
+      { w: '100%', color: 'var(--teal)',   label: 'Strong ✓' },
+    ];
+    const lvl = levels[score - 1] || levels[0];
+    $('#passwordStrengthBar').css({ width: lvl.w, background: lvl.color });
+    $('#passwordStrengthText').text(lvl.label).css('color', lvl.color);
+  });
+
+  // Password match hint
+  $('#registerConfirmPassword').on('input', function() {
+    const pwd  = $('#registerPassword').val();
+    const conf = $(this).val();
+    if (!conf) { $('#passwordMatchHint').text(''); return; }
+    if (pwd === conf) {
+      $('#passwordMatchHint').text('Passwords match ✓').css('color', 'var(--teal)');
+    } else {
+      $('#passwordMatchHint').text('Passwords do not match').css('color', 'var(--rose)');
+    }
+  });
+
+  // Form submit placeholder
+  $('#registerForm').on('submit', function(e) {
+    e.preventDefault();
+    const name     = $('#registerName').val().trim();
+    const email    = $('#registerEmail').val().trim();
+    const password = $('#registerPassword').val();
+    const confirm  = $('#registerConfirmPassword').val();
+    const role     = $('#registerRole').val();
+    const agreed   = $('#agreeTerms').is(':checked');
+
+    if (!name || !email || !password || !confirm || !agreed) return;
+    if (password !== confirm) {
+      $('#registerAlertMsg').text('Passwords do not match.');
+      $('#registerAlert').removeClass('d-none');
+      return;
+    }
+
+    // Show loading
+    $('#registerBtnText').addClass('d-none');
+    $('#registerBtnLoading').removeClass('d-none');
+    $('#registerBtn').prop('disabled', true);
+    $('#registerAlert').addClass('d-none');
+
+    // Firebase auth.js will call: createUserWithEmailAndPassword(auth, email, password)
+    // then store displayName + role in Firestore
+    console.log('[Auth] Register attempted:', { name, email, role });
+  });
+
+  // Google sign-up
+  $('#googleRegisterBtn').on('click', function() {
+    // Firebase: signInWithPopup(auth, googleProvider)
+    console.log('[Auth] Google register triggered');
+  });
+</script>
+</body>
+</html>

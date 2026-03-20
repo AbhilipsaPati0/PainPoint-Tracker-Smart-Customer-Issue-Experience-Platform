@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Explore Issues — PainPoint Tracker</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%2300c9a7'/><text y='24' x='5' font-size='22'>📍</text></svg>"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet"/>
+  <link href="css/style.css" rel="stylesheet"/>
+</head>
+<body>
+
+<!-- ── NAVBAR ── -->
+<nav class="navbar-custom">
+  <div class="container">
+    <div class="d-flex align-items-center justify-content-between w-100">
+      <a href="index.html" class="navbar-brand-custom">
+        <div class="brand-icon">📍</div>
+        Pain<span class="brand-accent">Point</span>
+      </a>
+      <div class="d-none d-md-flex align-items-center gap-2">
+        <a href="explore.html"  class="nav-link-custom active">Explore</a>
+        <a href="submit.html"   class="nav-link-custom">Submit Issue</a>
+        <a href="dashboard.html" class="nav-link-custom">Dashboard</a>
+        <!-- User Avatar (shown when logged in) -->
+        <div class="nav-avatar ms-2" id="navAvatar" title="Your profile">U</div>
+        <!-- Login CTA (shown when logged out) -->
+        <a href="login.html" class="btn-outline-teal ms-2" id="navLoginBtn" style="padding:7px 18px;font-size:0.85rem;">Log In</a>
+      </div>
+      <button class="navbar-toggler d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#mobileNavExplore">
+        <i class="bi bi-list" style="color:var(--text-secondary);font-size:1.4rem;"></i>
+      </button>
+    </div>
+    <div class="collapse w-100 mt-3 d-md-none" id="mobileNavExplore">
+      <div class="d-flex flex-column gap-1 pb-2">
+        <a href="explore.html"   class="nav-link-custom active">Explore</a>
+        <a href="submit.html"    class="nav-link-custom">Submit Issue</a>
+        <a href="dashboard.html" class="nav-link-custom">Dashboard</a>
+        <a href="login.html"     class="nav-link-custom">Log In</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ── PAGE HEADER ── -->
+<div class="explore-header">
+  <div class="container">
+    <div class="row align-items-center justify-content-between">
+      <div class="col-md-7">
+        <div class="section-label mb-2">Community Feed</div>
+        <h1 class="explore-title">Explore Issues</h1>
+        <p class="explore-subtitle mt-2">Browse, upvote, and comment on customer pain points. Your voice shapes what gets fixed.</p>
+      </div>
+      <div class="col-md-auto mt-3 mt-md-0">
+        <a href="submit.html" class="btn-teal" style="padding:12px 24px;font-size:0.9rem;">
+          <i class="bi bi-plus-circle me-2"></i>Report an Issue
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container pb-5">
+
+  <!-- ── FILTER BAR ── -->
+  <div class="filter-bar">
+    <!-- Search -->
+    <div class="search-input-wrap">
+      <i class="bi bi-search search-icon"></i>
+      <input type="text" id="searchInput" placeholder="Search issues..." autocomplete="off"/>
+    </div>
+
+    <!-- Category Filters -->
+    <div class="filter-group">
+      <span class="filter-label">Category:</span>
+      <button class="filter-chip active" data-filter="all">All</button>
+      <button class="filter-chip" data-filter="ux">
+        <i class="bi bi-palette2 me-1"></i>UX
+      </button>
+      <button class="filter-chip" data-filter="billing">
+        <i class="bi bi-credit-card me-1"></i>Billing
+      </button>
+      <button class="filter-chip" data-filter="technical">
+        <i class="bi bi-bug me-1"></i>Technical
+      </button>
+      <button class="filter-chip" data-filter="support">
+        <i class="bi bi-headset me-1"></i>Support
+      </button>
+      <button class="filter-chip" data-filter="delivery">
+        <i class="bi bi-box-seam me-1"></i>Delivery
+      </button>
+    </div>
+
+    <!-- Status Filter -->
+    <div class="filter-group">
+      <span class="filter-label">Status:</span>
+      <select class="sort-select" id="statusFilter">
+        <option value="all">All Status</option>
+        <option value="pending">Pending</option>
+        <option value="in-progress">In Progress</option>
+        <option value="resolved">Resolved</option>
+      </select>
+    </div>
+
+    <!-- Sort -->
+    <div class="filter-group ms-md-auto">
+      <span class="filter-label">Sort:</span>
+      <select class="sort-select" id="sortSelect">
+        <option value="newest">Newest First</option>
+        <option value="upvotes">Most Upvoted</option>
+        <option value="comments">Most Discussed</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Issues count + view toggle -->
+  <div class="d-flex align-items-center justify-content-between mb-4">
+    <p class="issues-count mb-0">
+      Showing <strong id="issuesShownCount">--</strong> of <strong id="issuesTotalCount">--</strong> issues
+    </p>
+    <div class="d-flex gap-2">
+      <button class="btn-icon active" id="viewGrid" title="Grid view"><i class="bi bi-grid-3x3-gap"></i></button>
+      <button class="btn-icon" id="viewList" title="List view"><i class="bi bi-list-ul"></i></button>
+    </div>
+  </div>
+
+  <!-- ── ISSUES GRID ── -->
+  <!-- Firebase/issues.js will populate this container -->
+  <div id="issuesFeed" class="row g-4">
+
+    <!-- SKELETON LOADERS (shown while Firebase fetches) -->
+    <div class="col-md-6 col-lg-4" id="skeletonCard1">
+      <div class="issue-card" style="cursor:default;">
+        <div style="display:flex;gap:8px;margin-bottom:14px;">
+          <div style="height:20px;width:70px;background:var(--border);border-radius:10px;" class="pulse"></div>
+          <div style="height:20px;width:90px;background:var(--border);border-radius:10px;" class="pulse"></div>
+        </div>
+        <div style="height:22px;width:85%;background:var(--border-light);border-radius:6px;margin-bottom:10px;" class="pulse"></div>
+        <div style="height:14px;width:100%;background:var(--border);border-radius:4px;margin-bottom:6px;" class="pulse"></div>
+        <div style="height:14px;width:70%;background:var(--border);border-radius:4px;margin-bottom:18px;" class="pulse"></div>
+        <div class="issue-card-footer">
+          <div style="height:24px;width:60px;background:var(--border);border-radius:6px;" class="pulse"></div>
+          <div style="height:24px;width:80px;background:var(--border);border-radius:6px;" class="pulse"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-4" id="skeletonCard2">
+      <div class="issue-card" style="cursor:default;">
+        <div style="display:flex;gap:8px;margin-bottom:14px;">
+          <div style="height:20px;width:60px;background:var(--border);border-radius:10px;" class="pulse"></div>
+          <div style="height:20px;width:80px;background:var(--border);border-radius:10px;" class="pulse"></div>
+        </div>
+        <div style="height:22px;width:75%;background:var(--border-light);border-radius:6px;margin-bottom:10px;" class="pulse"></div>
+        <div style="height:14px;width:100%;background:var(--border);border-radius:4px;margin-bottom:6px;" class="pulse"></div>
+        <div style="height:14px;width:55%;background:var(--border);border-radius:4px;margin-bottom:18px;" class="pulse"></div>
+        <div class="issue-card-footer">
+          <div style="height:24px;width:60px;background:var(--border);border-radius:6px;" class="pulse"></div>
+          <div style="height:24px;width:80px;background:var(--border);border-radius:6px;" class="pulse"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-4 d-none d-lg-block" id="skeletonCard3">
+      <div class="issue-card" style="cursor:default;">
+        <div style="display:flex;gap:8px;margin-bottom:14px;">
+          <div style="height:20px;width:80px;background:var(--border);border-radius:10px;" class="pulse"></div>
+          <div style="height:20px;width:70px;background:var(--border);border-radius:10px;" class="pulse"></div>
+        </div>
+        <div style="height:22px;width:90%;background:var(--border-light);border-radius:6px;margin-bottom:10px;" class="pulse"></div>
+        <div style="height:14px;width:100%;background:var(--border);border-radius:4px;margin-bottom:6px;" class="pulse"></div>
+        <div style="height:14px;width:80%;background:var(--border);border-radius:4px;margin-bottom:18px;" class="pulse"></div>
+        <div class="issue-card-footer">
+          <div style="height:24px;width:60px;background:var(--border);border-radius:6px;" class="pulse"></div>
+          <div style="height:24px;width:80px;background:var(--border);border-radius:6px;" class="pulse"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DEMO ISSUE CARDS (replace with Firebase data) -->
+    <!-- Card 1 -->
+    <div class="col-md-6 col-lg-4 issue-col">
+      <a href="issue-details.html?id=1" style="text-decoration:none;">
+        <div class="issue-card">
+          <div class="issue-card-meta mb-3">
+            <span class="badge-category cat-technical">🐛 Technical</span>
+            <span class="badge-status badge-pending">Pending</span>
+          </div>
+          <div class="issue-card-title">Checkout button not responding on mobile Safari</div>
+          <p class="issue-card-desc">The purchase button completely freezes on iOS Safari 16+. Users cannot complete their orders, causing major drop-offs at the final step of the funnel.</p>
+          <div class="issue-card-footer">
+            <div class="issue-author">
+              <div class="author-avatar">R</div>
+              <span>Riya M. &middot; 2h ago</span>
+            </div>
+            <div class="d-flex gap-2">
+              <button class="btn-icon upvote-btn" data-id="1" data-count="41">
+                <i class="bi bi-arrow-up"></i> <span class="upvote-count">41</span>
+              </button>
+              <button class="btn-icon">
+                <i class="bi bi-chat"></i> 8
+              </button>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="col-md-6 col-lg-4 issue-col">
+      <a href="issue-details.html?id=2" style="text-decoration:none;">
+        <div class="issue-card">
+          <div class="issue-card-meta mb-3">
+            <span class="badge-category cat-billing">💳 Billing</span>
+            <span class="badge-status badge-progress">In Progress</span>
+          </div>
+          <div class="issue-card-title">Double charged after subscription renewal last month</div>
+          <p class="issue-card-desc">My account was billed twice for the same subscription cycle. The support ticket has been open for 3 weeks with no resolution update.</p>
+          <div class="issue-card-footer">
+            <div class="issue-author">
+              <div class="author-avatar" style="background:linear-gradient(135deg,var(--amber),var(--rose));">A</div>
+              <span>Arjun K. &middot; 1d ago</span>
+            </div>
+            <div class="d-flex gap-2">
+              <button class="btn-icon upvote-btn" data-id="2" data-count="67">
+                <i class="bi bi-arrow-up"></i> <span class="upvote-count">67</span>
+              </button>
+              <button class="btn-icon">
+                <i class="bi bi-chat"></i> 14
+              </button>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="col-md-6 col-lg-4 issue-col">
+      <a href="issue-details.html?id=3" style="text-decoration:none;">
+        <div class="issue-card">
+          <div class="issue-card-meta mb-3">
+            <span class="badge-category cat-ux">🎨 UX</span>
+            <span class="badge-status badge-resolved">Resolved</span>
+          </div>
+          <div class="issue-card-title">Dark mode flickers on initial page load</div>
+          <p class="issue-card-desc">There's a visible white flash before the dark theme kicks in. It's especially jarring at night. Affects user comfort significantly during extended sessions.</p>
+          <div class="issue-card-footer">
+            <div class="issue-author">
+              <div class="author-avatar" style="background:linear-gradient(135deg,var(--indigo),var(--teal));">S</div>
+              <span>Sana P. &middot; 3d ago</span>
+            </div>
+            <div class="d-flex gap-2">
+              <button class="btn-icon upvote-btn active" data-id="3" data-count="29">
+                <i class="bi bi-arrow-up"></i> <span class="upvote-count">29</span>
+              </button>
+              <button class="btn-icon">
+                <i class="bi bi-chat"></i> 5
+              </button>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="col-md-6 col-lg-4 issue-col">
+      <a href="issue-details.html?id=4" style="text-decoration:none;">
+        <div class="issue-card">
+          <div class="issue-card-meta mb-3">
+            <span class="badge-category cat-support">🎧 Support</span>
+            <span class="badge-status badge-pending">Pending</span>
+          </div>
+          <div class="issue-card-title">Support chat widget disappears mid-conversation</div>
+          <p class="issue-card-desc">The live chat bubble vanishes after about 2 minutes of inactivity, losing the entire conversation thread and forcing users to start over.</p>
+          <div class="issue-card-footer">
+            <div class="issue-author">
+              <div class="author-avatar" style="background:linear-gradient(135deg,#a78bfa,var(--teal));">M</div>
+              <span>Meera D. &middot; 5h ago</span>
+            </div>
+            <div class="d-flex gap-2">
+              <button class="btn-icon upvote-btn" data-id="4" data-count="18">
+                <i class="bi bi-arrow-up"></i> <span class="upvote-count">18</span>
+              </button>
+              <button class="btn-icon">
+                <i class="bi bi-chat"></i> 3
+              </button>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Card 5 -->
+    <div class="col-md-6 col-lg-4 issue-col">
+      <a href="issue-details.html?id=5" style="text-decoration:none;">
+        <div class="issue-card">
+          <div class="issue-card-meta mb-3">
+            <span class="badge-category cat-delivery">📦 Delivery</span>
+            <span class="badge-status badge-progress">In Progress</span>
+          </div>
+          <div class="issue-card-title">No tracking updates after order dispatch confirmation</div>
+          <p class="issue-card-desc">After getting a dispatch email, the tracking page shows no updates for days. Customers are left guessing whether their package is on the way.</p>
+          <div class="issue-card-footer">
+            <div class="issue-author">
+              <div class="author-avatar" style="background:linear-gradient(135deg,var(--rose),var(--amber));">K</div>
+              <span>Karan S. &middot; 2d ago</span>
+            </div>
+            <div class="d-flex gap-2">
+              <button class="btn-icon upvote-btn" data-id="5" data-count="53">
+                <i class="bi bi-arrow-up"></i> <span class="upvote-count">53</span>
+              </button>
+              <button class="btn-icon">
+                <i class="bi bi-chat"></i> 11
+              </button>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Card 6 -->
+    <div class="col-md-6 col-lg-4 issue-col">
+      <a href="issue-details.html?id=6" style="text-decoration:none;">
+        <div class="issue-card">
+          <div class="issue-card-meta mb-3">
+            <span class="badge-category cat-ux">🎨 UX</span>
+            <span class="badge-status badge-pending">Pending</span>
+          </div>
+          <div class="issue-card-title">Password reset email never arrives in inbox</div>
+          <p class="issue-card-desc">Triggering "Forgot Password" sends nothing — not even to spam. Checked multiple email clients. Users are completely locked out of their accounts.</p>
+          <div class="issue-card-footer">
+            <div class="issue-author">
+              <div class="author-avatar" style="background:linear-gradient(135deg,var(--teal),#a78bfa);">P</div>
+              <span>Priya V. &middot; 4h ago</span>
+            </div>
+            <div class="d-flex gap-2">
+              <button class="btn-icon upvote-btn" data-id="6" data-count="88">
+                <i class="bi bi-arrow-up"></i> <span class="upvote-count">88</span>
+              </button>
+              <button class="btn-icon">
+                <i class="bi bi-chat"></i> 22
+              </button>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+
+  </div><!-- /#issuesFeed -->
+
+  <!-- Empty State (shown when no results) -->
+  <div class="empty-state d-none" id="emptyState">
+    <div class="empty-state-icon">🔍</div>
+    <div class="empty-state-title">No issues found</div>
+    <p class="empty-state-text">Try adjusting your filters or be the first to report this issue.</p>
+    <a href="submit.html" class="btn-teal mt-3" style="padding:10px 24px;">
+      <i class="bi bi-plus me-2"></i>Submit Issue
+    </a>
+  </div>
+
+  <!-- ── LOAD MORE ── -->
+  <div class="text-center mt-5" id="loadMoreWrap">
+    <button class="btn-ghost" id="loadMoreBtn" style="padding:12px 36px;font-size:0.9rem;">
+      <i class="bi bi-arrow-down-circle me-2"></i>Load More Issues
+    </button>
+  </div>
+
+</div><!-- /container -->
+
+<!-- Toast Container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="js/firebase-config.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/issues.js"></script>
+<script>
+  // ── Demo count update ──
+  $('#issuesShownCount').text('6');
+  $('#issuesTotalCount').text('142');
+
+  // Remove skeleton loaders (Firebase issues.js will do this after fetching)
+  setTimeout(function() {
+    $('#skeletonCard1, #skeletonCard2, #skeletonCard3').fadeOut(300, function() { $(this).remove(); });
+  }, 800);
+
+  // ── Category filter chips ──
+  $('.filter-chip').on('click', function() {
+    $('.filter-chip').removeClass('active');
+    $(this).addClass('active');
+    const filter = $(this).data('filter');
+    // Firebase issues.js will query Firestore with category filter
+    console.log('[Issues] Filter by category:', filter);
+  });
+
+  // ── Search ──
+  $('#searchInput').on('input', function() {
+    const query = $(this).val().toLowerCase().trim();
+    // Firebase issues.js will handle search
+    console.log('[Issues] Search query:', query);
+
+    // Simple client-side demo filter
+    if (!query) {
+      $('.issue-col').show();
+      return;
+    }
+    $('.issue-col').each(function() {
+      const text = $(this).text().toLowerCase();
+      $(this).toggle(text.includes(query));
+    });
+  });
+
+  // ── Sort ──
+  $('#sortSelect').on('change', function() {
+    console.log('[Issues] Sort by:', $(this).val());
+    // Firebase issues.js will re-query with new sort order
+  });
+
+  // ── Status filter ──
+  $('#statusFilter').on('change', function() {
+    console.log('[Issues] Status filter:', $(this).val());
+    // Firebase issues.js will re-query with status filter
+  });
+
+  // ── Upvote ──
+  $(document).on('click', '.upvote-btn', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    const btn   = $(this);
+    const id    = btn.data('id');
+    const count = parseInt(btn.data('count'));
+
+    if (btn.hasClass('active')) {
+      btn.removeClass('active');
+      btn.data('count', count - 1);
+      btn.find('.upvote-count').text(count - 1);
+    } else {
+      btn.addClass('active');
+      btn.data('count', count + 1);
+      btn.find('.upvote-count').text(count + 1);
+    }
+    // Firebase issues.js will update Firestore: arrayUnion / arrayRemove uid
+    console.log('[Issues] Upvote toggled for issue:', id);
+  });
+
+  // ── View toggle ──
+  $('#viewGrid').on('click', function() {
+    $(this).addClass('active'); $('#viewList').removeClass('active');
+    $('.issue-col').removeClass('col-12').addClass('col-md-6 col-lg-4');
+  });
+  $('#viewList').on('click', function() {
+    $(this).addClass('active'); $('#viewGrid').removeClass('active');
+    $('.issue-col').removeClass('col-md-6 col-lg-4').addClass('col-12');
+  });
+
+  // ── Load More ──
+  $('#loadMoreBtn').on('click', function() {
+    $(this).prop('disabled', true).html('<span class="spinner" style="width:16px;height:16px;border-width:2px;display:inline-block;vertical-align:middle;margin-right:8px;"></span>Loading...');
+    // Firebase issues.js will fetch next page
+    setTimeout(() => {
+      $(this).prop('disabled', false).html('<i class="bi bi-arrow-down-circle me-2"></i>Load More Issues');
+    }, 1500);
+  });
+</script>
+</body>
+</html>

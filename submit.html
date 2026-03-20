@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Submit Issue — PainPoint Tracker</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%2300c9a7'/><text y='24' x='5' font-size='22'>📍</text></svg>"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet"/>
+  <link href="css/style.css" rel="stylesheet"/>
+</head>
+<body>
+
+<!-- ── NAVBAR ── -->
+<nav class="navbar-custom">
+  <div class="container">
+    <div class="d-flex align-items-center justify-content-between w-100">
+      <a href="index.html" class="navbar-brand-custom">
+        <div class="brand-icon">📍</div>
+        Pain<span class="brand-accent">Point</span>
+      </a>
+      <div class="d-none d-md-flex align-items-center gap-2">
+        <a href="explore.html"  class="nav-link-custom">Explore</a>
+        <a href="submit.html"   class="nav-link-custom active">Submit Issue</a>
+        <a href="dashboard.html" class="nav-link-custom">Dashboard</a>
+        <div class="nav-avatar ms-2" id="navAvatar">U</div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ── PAGE HEADER ── -->
+<div class="submit-header">
+  <div class="container">
+    <a href="explore.html" class="back-link">
+      <i class="bi bi-arrow-left"></i> Back to Issues
+    </a>
+    <div class="section-label mb-2">New Report</div>
+    <h1 class="submit-title">Submit an Issue</h1>
+    <p class="submit-subtitle mt-2">Describe your pain point clearly so the team can understand and resolve it faster.</p>
+  </div>
+</div>
+
+<div class="container pb-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+
+      <!-- ── Step Indicator ── -->
+      <div class="step-indicator mb-5">
+        <div class="step active" id="step1Indicator">
+          <div class="step-num">1</div>
+          <div class="step-text">Basic Info</div>
+        </div>
+        <div class="step-line"></div>
+        <div class="step" id="step2Indicator">
+          <div class="step-num">2</div>
+          <div class="step-text">Details</div>
+        </div>
+        <div class="step-line"></div>
+        <div class="step" id="step3Indicator">
+          <div class="step-num">3</div>
+          <div class="step-text">Attachments</div>
+        </div>
+        <div class="step-line"></div>
+        <div class="step" id="step4Indicator">
+          <div class="step-num">4</div>
+          <div class="step-text">Review</div>
+        </div>
+      </div>
+
+      <!-- ── FORM ── -->
+      <form id="submitIssueForm" novalidate>
+
+        <!-- ═══ STEP 1: Basic Info ═══ -->
+        <div id="formStep1">
+          <div class="form-card mb-4">
+            <h3 style="font-family:var(--font-display);font-size:1.2rem;font-weight:700;margin-bottom:6px;">Basic Information</h3>
+            <p style="color:var(--text-secondary);font-size:0.88rem;margin-bottom:28px;">Give your issue a clear, specific title so others can find and relate to it.</p>
+
+            <!-- Issue Title -->
+            <div class="form-group-custom">
+              <label class="form-label-custom" for="issueTitle">Issue Title <span style="color:var(--rose);">*</span></label>
+              <input
+                type="text"
+                id="issueTitle"
+                name="title"
+                class="form-control-custom"
+                placeholder="e.g. Checkout button freezes on mobile Safari"
+                maxlength="120"
+                required
+              />
+              <div class="d-flex justify-content-between">
+                <div class="form-hint">Be specific — avoid vague titles like "App is broken".</div>
+                <div class="char-counter" id="titleCounter">0/120</div>
+              </div>
+            </div>
+
+            <!-- Category Selection -->
+            <div class="form-group-custom">
+              <label class="form-label-custom">Category <span style="color:var(--rose);">*</span></label>
+              <input type="hidden" id="selectedCategory" name="category" required/>
+              <div class="category-grid" id="categoryGrid">
+                <div class="category-option" data-category="ux">
+                  <div class="category-option-icon">🎨</div>
+                  <div class="category-option-name">UX / Design</div>
+                </div>
+                <div class="category-option" data-category="billing">
+                  <div class="category-option-icon">💳</div>
+                  <div class="category-option-name">Billing</div>
+                </div>
+                <div class="category-option" data-category="technical">
+                  <div class="category-option-icon">🐛</div>
+                  <div class="category-option-name">Technical</div>
+                </div>
+                <div class="category-option" data-category="support">
+                  <div class="category-option-icon">🎧</div>
+                  <div class="category-option-name">Support</div>
+                </div>
+                <div class="category-option" data-category="delivery">
+                  <div class="category-option-icon">📦</div>
+                  <div class="category-option-name">Delivery</div>
+                </div>
+                <div class="category-option" data-category="other">
+                  <div class="category-option-icon">💡</div>
+                  <div class="category-option-name">Other</div>
+                </div>
+              </div>
+              <div class="form-hint mt-2" id="categoryHint">Select the category that best describes your issue.</div>
+            </div>
+
+            <div class="d-flex justify-content-end mt-2">
+              <button type="button" class="btn-teal" id="nextStep1" style="padding:11px 28px;">
+                Next: Add Details <i class="bi bi-arrow-right ms-2"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══ STEP 2: Details ═══ -->
+        <div id="formStep2" class="d-none">
+          <div class="form-card mb-4">
+            <h3 style="font-family:var(--font-display);font-size:1.2rem;font-weight:700;margin-bottom:6px;">Issue Description</h3>
+            <p style="color:var(--text-secondary);font-size:0.88rem;margin-bottom:28px;">The more detail you provide, the faster we can resolve it.</p>
+
+            <!-- Description -->
+            <div class="form-group-custom">
+              <label class="form-label-custom" for="issueDescription">Full Description <span style="color:var(--rose);">*</span></label>
+              <textarea
+                id="issueDescription"
+                name="description"
+                class="form-control-custom"
+                placeholder="Describe the issue in detail. Include:&#10;• What exactly happened&#10;• Steps to reproduce&#10;• What you expected to happen&#10;• Any error messages you saw"
+                maxlength="2000"
+                rows="7"
+                required
+              ></textarea>
+              <div class="d-flex justify-content-between">
+                <div class="form-hint">Minimum 50 characters.</div>
+                <div class="char-counter" id="descCounter">0/2000</div>
+              </div>
+            </div>
+
+            <!-- Severity -->
+            <div class="form-group-custom">
+              <label class="form-label-custom" for="issueSeverity">Severity Level</label>
+              <select id="issueSeverity" name="severity" class="form-control-custom">
+                <option value="low">🟢 Low — Minor inconvenience</option>
+                <option value="medium" selected>🟡 Medium — Affects my workflow</option>
+                <option value="high">🔴 High — Blocking issue / Cannot proceed</option>
+                <option value="critical">🚨 Critical — System-wide / Data loss</option>
+              </select>
+            </div>
+
+            <!-- Device / Platform -->
+            <div class="form-group-custom">
+              <label class="form-label-custom" for="issuePlatform">Platform / Device <span style="color:var(--text-muted);font-weight:400;text-transform:none;letter-spacing:0;">(optional)</span></label>
+              <input
+                type="text"
+                id="issuePlatform"
+                name="platform"
+                class="form-control-custom"
+                placeholder="e.g. iPhone 14, Safari 16, macOS Ventura"
+              />
+              <div class="form-hint">Helps us reproduce the issue faster.</div>
+            </div>
+
+            <!-- Steps to Reproduce -->
+            <div class="form-group-custom">
+              <label class="form-label-custom" for="issueSteps">Steps to Reproduce <span style="color:var(--text-muted);font-weight:400;text-transform:none;letter-spacing:0;">(optional)</span></label>
+              <textarea
+                id="issueSteps"
+                name="steps"
+                class="form-control-custom"
+                placeholder="1. Go to checkout page&#10;2. Add item to cart&#10;3. Click 'Buy Now'&#10;4. Button freezes"
+                rows="4"
+              ></textarea>
+            </div>
+
+            <div class="d-flex justify-content-between mt-2">
+              <button type="button" class="btn-ghost" id="backStep1" style="padding:11px 20px;">
+                <i class="bi bi-arrow-left me-2"></i>Back
+              </button>
+              <button type="button" class="btn-teal" id="nextStep2" style="padding:11px 28px;">
+                Next: Add Image <i class="bi bi-arrow-right ms-2"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══ STEP 3: Attachments ═══ -->
+        <div id="formStep3" class="d-none">
+          <div class="form-card mb-4">
+            <h3 style="font-family:var(--font-display);font-size:1.2rem;font-weight:700;margin-bottom:6px;">Add an Image</h3>
+            <p style="color:var(--text-secondary);font-size:0.88rem;margin-bottom:28px;">A screenshot or screen recording makes your report much clearer. Completely optional.</p>
+
+            <!-- Upload Zone -->
+            <div class="upload-zone" id="uploadZone">
+              <div class="upload-zone-icon">📎</div>
+              <div class="upload-zone-text">
+                <span>Click to upload</span> or drag and drop here
+              </div>
+              <div style="font-size:0.78rem;color:var(--text-muted);margin-top:8px;">PNG, JPG, GIF, WEBP up to 5MB</div>
+              <input type="file" id="issueImage" name="image" accept="image/*" style="display:none;"/>
+            </div>
+
+            <!-- Image Preview -->
+            <div id="imagePreviewWrap" class="d-none mt-3" style="position:relative;">
+              <img id="imagePreview" src="" alt="Preview" style="width:100%;border-radius:var(--radius-md);border:1px solid var(--border);max-height:280px;object-fit:cover;"/>
+              <button type="button" id="removeImage" style="position:absolute;top:10px;right:10px;background:var(--rose);border:none;color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;">
+                <i class="bi bi-x"></i>
+              </button>
+              <div id="imageFileName" style="font-size:0.8rem;color:var(--text-muted);margin-top:8px;"></div>
+            </div>
+
+            <div class="d-flex justify-content-between mt-4">
+              <button type="button" class="btn-ghost" id="backStep2" style="padding:11px 20px;">
+                <i class="bi bi-arrow-left me-2"></i>Back
+              </button>
+              <button type="button" class="btn-teal" id="nextStep3" style="padding:11px 28px;">
+                Next: Review <i class="bi bi-arrow-right ms-2"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══ STEP 4: Review & Submit ═══ -->
+        <div id="formStep4" class="d-none">
+          <div class="form-card mb-4">
+            <h3 style="font-family:var(--font-display);font-size:1.2rem;font-weight:700;margin-bottom:6px;">Review & Submit</h3>
+            <p style="color:var(--text-secondary);font-size:0.88rem;margin-bottom:28px;">Double-check your report before submitting.</p>
+
+            <!-- Review Summary -->
+            <div id="reviewSummary" style="background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--radius-md);padding:20px;">
+              <div style="margin-bottom:16px;">
+                <div class="form-label-custom">Title</div>
+                <div id="reviewTitle" style="color:var(--text-primary);font-weight:600;">—</div>
+              </div>
+              <div style="margin-bottom:16px;">
+                <div class="form-label-custom">Category</div>
+                <div id="reviewCategory">—</div>
+              </div>
+              <div style="margin-bottom:16px;">
+                <div class="form-label-custom">Severity</div>
+                <div id="reviewSeverity" style="color:var(--text-secondary);">—</div>
+              </div>
+              <div style="margin-bottom:16px;">
+                <div class="form-label-custom">Description</div>
+                <div id="reviewDescription" style="color:var(--text-secondary);font-size:0.88rem;line-height:1.6;white-space:pre-line;">—</div>
+              </div>
+              <div>
+                <div class="form-label-custom">Attachment</div>
+                <div id="reviewAttachment" style="color:var(--text-muted);font-size:0.88rem;">No image attached</div>
+              </div>
+            </div>
+
+            <!-- Visibility Toggle -->
+            <div class="d-flex align-items-center gap-3 mt-4 p-3" style="background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--radius-sm);">
+              <input type="checkbox" id="issuePublic" name="isPublic" checked style="width:18px;height:18px;accent-color:var(--teal);cursor:pointer;"/>
+              <div>
+                <label for="issuePublic" style="font-size:0.88rem;font-weight:600;color:var(--text-primary);cursor:pointer;margin:0;">Post publicly to the community feed</label>
+                <div style="font-size:0.78rem;color:var(--text-muted);">Others can upvote and comment to amplify your report.</div>
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-between mt-4">
+              <button type="button" class="btn-ghost" id="backStep3" style="padding:11px 20px;">
+                <i class="bi bi-arrow-left me-2"></i>Back
+              </button>
+              <button type="submit" class="btn-teal" id="submitBtn" style="padding:11px 32px;font-size:0.95rem;">
+                <span id="submitBtnText"><i class="bi bi-send me-2"></i>Submit Issue</span>
+                <span id="submitBtnLoading" class="d-none">
+                  <span class="spinner" style="width:16px;height:16px;border-width:2px;display:inline-block;vertical-align:middle;margin-right:8px;"></span>Submitting...
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </form><!-- /#submitIssueForm -->
+
+      <!-- Tips sidebar (below form on mobile, right side on large screens) -->
+      <div class="form-card" style="padding:24px;">
+        <div style="font-family:var(--font-display);font-size:0.88rem;font-weight:700;color:var(--teal);margin-bottom:14px;">
+          <i class="bi bi-lightbulb me-2"></i>Tips for a great report
+        </div>
+        <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;">
+          <li style="display:flex;gap:10px;align-items:flex-start;">
+            <span style="color:var(--teal);flex-shrink:0;margin-top:1px;">✓</span>
+            <span style="color:var(--text-secondary);font-size:0.85rem;">Use a specific title that summarizes the exact problem.</span>
+          </li>
+          <li style="display:flex;gap:10px;align-items:flex-start;">
+            <span style="color:var(--teal);flex-shrink:0;margin-top:1px;">✓</span>
+            <span style="color:var(--text-secondary);font-size:0.85rem;">Include which device, browser, or app version you're using.</span>
+          </li>
+          <li style="display:flex;gap:10px;align-items:flex-start;">
+            <span style="color:var(--teal);flex-shrink:0;margin-top:1px;">✓</span>
+            <span style="color:var(--text-secondary);font-size:0.85rem;">List the exact steps someone else could follow to reproduce the issue.</span>
+          </li>
+          <li style="display:flex;gap:10px;align-items:flex-start;">
+            <span style="color:var(--teal);flex-shrink:0;margin-top:1px;">✓</span>
+            <span style="color:var(--text-secondary);font-size:0.85rem;">Attach a screenshot or recording — visuals speed up resolution significantly.</span>
+          </li>
+          <li style="display:flex;gap:10px;align-items:flex-start;">
+            <span style="color:var(--teal);flex-shrink:0;margin-top:1px;">✓</span>
+            <span style="color:var(--text-secondary);font-size:0.85rem;">Post publicly so the community can upvote and validate your issue.</span>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</div><!-- /container -->
+
+<!-- Toast Container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="js/firebase-config.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/issues.js"></script>
+<script>
+  let currentStep = 1;
+
+  // ── Step Navigation ──
+  function goToStep(step) {
+    for (let i = 1; i <= 4; i++) {
+      $('#formStep' + i).addClass('d-none');
+      $('#step' + i + 'Indicator').removeClass('active done');
+      if (i < step) $('#step' + i + 'Indicator').addClass('done');
+    }
+    $('#formStep' + step).removeClass('d-none');
+    $('#step' + step + 'Indicator').addClass('active');
+    currentStep = step;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Step 1 → 2
+  $('#nextStep1').on('click', function() {
+    const title    = $('#issueTitle').val().trim();
+    const category = $('#selectedCategory').val();
+    if (!title) { $('#issueTitle').focus(); return; }
+    if (!category) { $('#categoryHint').text('Please select a category.').css('color','var(--rose)'); return; }
+    updateReview();
+    goToStep(2);
+  });
+
+  // Step 2 → 3
+  $('#nextStep2').on('click', function() {
+    const desc = $('#issueDescription').val().trim();
+    if (desc.length < 50) {
+      $('#issueDescription').focus();
+      return;
+    }
+    updateReview();
+    goToStep(3);
+  });
+
+  // Step 3 → 4
+  $('#nextStep3').on('click', function() { updateReview(); goToStep(4); });
+
+  // Back buttons
+  $('#backStep1').on('click', function() { goToStep(1); });
+  $('#backStep2').on('click', function() { goToStep(2); });
+  $('#backStep3').on('click', function() { goToStep(3); });
+
+  // ── Category selection ──
+  $('.category-option').on('click', function() {
+    $('.category-option').removeClass('selected');
+    $(this).addClass('selected');
+    const cat = $(this).data('category');
+    $('#selectedCategory').val(cat);
+    $('#categoryHint').text('Selected: ' + $(this).find('.category-option-name').text()).css('color', 'var(--teal)');
+  });
+
+  // ── Character counters ──
+  $('#issueTitle').on('input', function() {
+    const len = $(this).val().length;
+    const el  = $('#titleCounter');
+    el.text(len + '/120');
+    el.toggleClass('warn', len > 100).toggleClass('over', len >= 120);
+  });
+
+  $('#issueDescription').on('input', function() {
+    const len = $(this).val().length;
+    const el  = $('#descCounter');
+    el.text(len + '/2000');
+    el.toggleClass('warn', len > 1800).toggleClass('over', len >= 2000);
+  });
+
+  // ── Image Upload ──
+  $('#uploadZone').on('click', function() { $('#issueImage').click(); });
+
+  $('#uploadZone').on('dragover', function(e) {
+    e.preventDefault();
+    $(this).addClass('drag-over');
+  }).on('dragleave drop', function() { $(this).removeClass('drag-over'); });
+
+  $('#uploadZone').on('drop', function(e) {
+    e.preventDefault();
+    const file = e.originalEvent.dataTransfer.files[0];
+    if (file) handleImageFile(file);
+  });
+
+  $('#issueImage').on('change', function() {
+    if (this.files[0]) handleImageFile(this.files[0]);
+  });
+
+  function handleImageFile(file) {
+    if (!file.type.startsWith('image/')) { alert('Please upload an image file.'); return; }
+    if (file.size > 5 * 1024 * 1024)   { alert('File must be under 5MB.');       return; }
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      $('#imagePreview').attr('src', e.target.result);
+      $('#imageFileName').text(file.name + ' (' + (file.size / 1024).toFixed(0) + ' KB)');
+      $('#imagePreviewWrap').removeClass('d-none');
+      $('#uploadZone').hide();
+    };
+    reader.readAsDataURL(file);
+  }
+
+  $('#removeImage').on('click', function() {
+    $('#imagePreview').attr('src', '');
+    $('#imagePreviewWrap').addClass('d-none');
+    $('#uploadZone').show();
+    $('#issueImage').val('');
+  });
+
+  // ── Review Summary ──
+  function updateReview() {
+    $('#reviewTitle').text($('#issueTitle').val() || '—');
+    const catEl = $('.category-option.selected');
+    if (catEl.length) {
+      const icon = catEl.find('.category-option-icon').text();
+      const name = catEl.find('.category-option-name').text();
+      $('#reviewCategory').html('<span class="badge-category" style="border:1px solid var(--border);">' + icon + ' ' + name + '</span>');
+    }
+    $('#reviewSeverity').text($('#issueSeverity option:selected').text());
+    const desc = $('#issueDescription').val();
+    $('#reviewDescription').text(desc ? (desc.length > 200 ? desc.substring(0, 200) + '...' : desc) : '—');
+    const imgFile = $('#issueImage')[0].files[0];
+    $('#reviewAttachment').text(imgFile ? ('📎 ' + imgFile.name) : 'No image attached');
+  }
+
+  // ── Form Submit ──
+  $('#submitIssueForm').on('submit', function(e) {
+    e.preventDefault();
+
+    $('#submitBtnText').addClass('d-none');
+    $('#submitBtnLoading').removeClass('d-none');
+    $('#submitBtn').prop('disabled', true);
+
+    const issueData = {
+      title:       $('#issueTitle').val().trim(),
+      category:    $('#selectedCategory').val(),
+      description: $('#issueDescription').val().trim(),
+      severity:    $('#issueSeverity').val(),
+      platform:    $('#issuePlatform').val().trim(),
+      steps:       $('#issueSteps').val().trim(),
+      isPublic:    $('#issuePublic').is(':checked'),
+      status:      'pending',
+      upvotes:     [],
+      createdAt:   new Date().toISOString(),
+    };
+
+    // Firebase issues.js will:
+    // 1. Upload image to Firebase Storage (if any)
+    // 2. Add issue doc to Firestore
+    // 3. Redirect to explore.html or issue-details.html
+    console.log('[Issues] Submitting issue:', issueData);
+  });
+</script>
+</body>
+</html>
