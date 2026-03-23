@@ -16,8 +16,16 @@ import {
   updateProfile
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import {
-  doc, setDoc, getDoc, serverTimestamp
+  doc, setDoc, getDoc, getDocs, collection, serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+// ─── Admin Emails ────────────────────────────────────────────
+// Users who register with these emails automatically get admin role.
+
+const ADMIN_EMAILS = [
+  "abhilipsapati9@gmail.com",
+  "sagnikasubhadarshini@gmail.com",
+];
 
 // ─── Helpers ────────────────────────────────────────────────
 
@@ -51,17 +59,24 @@ function friendlyError(code) {
 
 async function createUserProfile(user, extraData = {}) {
   const userRef = doc(db, "users", user.uid);
-  const snap = await getDoc(userRef);
+  const snap    = await getDoc(userRef);
+  const isAdmin = ADMIN_EMAILS.includes(user.email?.toLowerCase());
+
   if (!snap.exists()) {
+    // New user — assign role based on ADMIN_EMAILS list
     await setDoc(userRef, {
       uid:         user.uid,
       name:        user.displayName || extraData.name || "Anonymous",
       email:       user.email,
-      role:        extraData.role || "user",       // "user" | "admin"
+      role:        isAdmin ? "admin" : "user",
       photoURL:    user.photoURL || "",
       createdAt:   serverTimestamp(),
       issuesCount: 0,
     });
+  } else if (isAdmin && snap.data().role !== "admin") {
+    // Existing user whose email is in the admin list — upgrade silently
+    // (handles Google sign-in on a pre-existing account)
+    await setDoc(userRef, { role: "admin" }, { merge: true });
   }
 }
 
