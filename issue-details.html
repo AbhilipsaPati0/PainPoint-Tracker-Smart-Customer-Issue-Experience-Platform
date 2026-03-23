@@ -8,11 +8,14 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet"/>
   <link href="css/style.css" rel="stylesheet"/>
-
-  <script type="module" src="js/firebase-config.js"></script>
-  <script type="module" src="js/auth.js"></script>
-  <script type="module" src="js/issues.js"></script>
-  <script type="module" src="js/comments.js"></script>
+  <script>
+    (function(){
+      try {
+        var t = localStorage.getItem('ppt-theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', t);
+      } catch(e){}
+    })();
+  </script>
 </head>
 <body>
 
@@ -28,6 +31,7 @@
         <a href="explore.html"  class="nav-link-custom">Explore</a>
         <a href="submit.html"   class="nav-link-custom">Submit Issue</a>
         <a href="dashboard.html" class="nav-link-custom">Dashboard</a>
+        <button class="theme-toggle" id="themeToggle" title="Toggle theme"><i class="bi bi-moon-stars-fill"></i></button>
         <div class="nav-avatar ms-2" id="navAvatar">U</div>
       </div>
     </div>
@@ -435,5 +439,68 @@
     if (e.ctrlKey && e.key === 'Enter') $('#submitCommentBtn').click();
   });
 </script>
+<!-- Floating theme toggle (always visible) -->
+<script>
+(function() {
+  var t = localStorage.getItem('ppt-theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', t);
+})();
+document.addEventListener('DOMContentLoaded', function() {
+  function syncAllToggles(theme) {
+    document.querySelectorAll('.theme-toggle').forEach(function(btn) {
+      var i = btn.querySelector('i');
+      if (i) i.className = theme === 'dark' ? 'bi bi-sun-fill' : 'bi bi-moon-stars-fill';
+      btn.title = theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
+    });
+  }
+  var current = document.documentElement.getAttribute('data-theme') || 'dark';
+  syncAllToggles(current);
+  document.querySelectorAll('.theme-toggle').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var now  = document.documentElement.getAttribute('data-theme');
+      var next = now === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('ppt-theme', next);
+      syncAllToggles(next);
+    });
+  });
+});
+</script>
+  <!-- ── THEME TOGGLE FAB ── -->
+  <button class="theme-toggle-fab" id="themeFab" aria-label="Toggle theme">
+    <i class="bi bi-moon-stars-fill"></i>
+  </button>
+  <script>
+    /* ── Theme toggle (runs on every page) ── */
+    (function () {
+      function applyTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('ppt-theme', theme);
+        document.querySelectorAll('.theme-toggle, .theme-toggle-fab').forEach(function (btn) {
+          var i = btn.querySelector('i');
+          if (i) {
+            i.className = theme === 'dark'
+              ? 'bi bi-sun-fill'
+              : 'bi bi-moon-stars-fill';
+          }
+          btn.title = theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
+        });
+      }
+
+      /* Sync icon on load */
+      var saved = localStorage.getItem('ppt-theme') || 'dark';
+      document.addEventListener('DOMContentLoaded', function () {
+        applyTheme(saved);
+
+        /* Bind every toggle button on this page */
+        document.querySelectorAll('.theme-toggle, .theme-toggle-fab').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var current = document.documentElement.getAttribute('data-theme') || 'dark';
+            applyTheme(current === 'dark' ? 'light' : 'dark');
+          });
+        });
+      });
+    })();
+  </script>
 </body>
 </html>

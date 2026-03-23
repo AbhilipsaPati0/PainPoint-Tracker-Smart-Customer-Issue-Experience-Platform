@@ -8,6 +8,14 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet"/>
   <link href="css/style.css" rel="stylesheet"/>
+  <script>
+    (function(){
+      try {
+        var t = localStorage.getItem('ppt-theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', t);
+      } catch(e){}
+    })();
+  </script>
 </head>
 <body>
 
@@ -741,9 +749,6 @@ const guardInterval = setInterval(() => {
 }, 100);
 </script>
 <!-- Floating theme toggle (always visible) -->
-<button class="theme-toggle-fab" id="themeFab" title="Toggle dark/light mode">
-  <i class="bi bi-moon-stars-fill"></i>
-</button>
 <script>
 (function() {
   var t = localStorage.getItem('ppt-theme') || 'dark';
@@ -770,5 +775,41 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 </script>
+  <!-- ── THEME TOGGLE FAB ── -->
+  <button class="theme-toggle-fab" id="themeFab" aria-label="Toggle theme">
+    <i class="bi bi-moon-stars-fill"></i>
+  </button>
+  <script>
+    /* ── Theme toggle (runs on every page) ── */
+    (function () {
+      function applyTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('ppt-theme', theme);
+        document.querySelectorAll('.theme-toggle, .theme-toggle-fab').forEach(function (btn) {
+          var i = btn.querySelector('i');
+          if (i) {
+            i.className = theme === 'dark'
+              ? 'bi bi-sun-fill'
+              : 'bi bi-moon-stars-fill';
+          }
+          btn.title = theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
+        });
+      }
+
+      /* Sync icon on load */
+      var saved = localStorage.getItem('ppt-theme') || 'dark';
+      document.addEventListener('DOMContentLoaded', function () {
+        applyTheme(saved);
+
+        /* Bind every toggle button on this page */
+        document.querySelectorAll('.theme-toggle, .theme-toggle-fab').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var current = document.documentElement.getAttribute('data-theme') || 'dark';
+            applyTheme(current === 'dark' ? 'light' : 'dark');
+          });
+        });
+      });
+    })();
+  </script>
 </body>
 </html>
