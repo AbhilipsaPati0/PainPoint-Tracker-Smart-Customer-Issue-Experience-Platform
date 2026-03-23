@@ -8,12 +8,17 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet"/>
   <link href="css/style.css" rel="stylesheet"/>
-
-  <script type="module" src="js/firebase-config.js"></script>
-  <script type="module" src="js/auth.js"></script>
-  <script type="module" src="js/dashboard.js"></script>
 </head>
 <body>
+
+<!-- ── ADMIN ACCESS GUARD (hidden once auth confirms admin) ── -->
+<div id="dashboardGuard">
+  <div class="guard-icon">🔒</div>
+  <div class="guard-title">Checking access...</div>
+  <div class="guard-sub">Verifying your admin credentials. Please wait.</div>
+  <div class="spinner" style="width:28px;height:28px;border-width:2.5px;"></div>
+</div>
+
 
 <!-- ── NAVBAR ── -->
 <nav class="navbar-custom">
@@ -33,6 +38,8 @@
           <i class="bi bi-bell" style="color:var(--text-secondary);font-size:18px;"></i>
           <span style="position:absolute;top:-4px;right:-4px;width:8px;height:8px;background:var(--rose);border-radius:50%;border:2px solid var(--bg-primary);" id="notifDot"></span>
         </div>
+        <!-- Theme Toggle -->
+        <button class="theme-toggle" id="themeToggle" title="Toggle theme"><i class="bi bi-moon-stars-fill"></i></button>
         <!-- Admin Avatar -->
         <div class="nav-avatar" style="background:linear-gradient(135deg,var(--amber),var(--rose));" id="adminAvatar">A</div>
       </div>
@@ -678,6 +685,90 @@
   // 4. Populate #issuesTableBody with paginated getDocs()
   // 5. Populate #topPainPoints ordered by upvotes desc, status != resolved
   // 6. Handle real-time updates with onSnapshot() for live stat cards
+</script>
+
+<script>
+// ── Dashboard Admin Guard ─────────────────────────────
+// Waits for auth.js to resolve currentUser + currentUserRole.
+// If not admin within 4s → redirect to login.
+const guard = document.getElementById('dashboardGuard');
+let guardChecks = 0;
+
+const guardInterval = setInterval(() => {
+  guardChecks++;
+
+  // auth.js sets window.currentUser (null = logged out, object = logged in)
+  if (window.currentUser === undefined) {
+    // Still loading — keep waiting
+    if (guardChecks > 40) {
+      // Timeout after 4s — assume not logged in
+      clearInterval(guardInterval);
+      window.location.href = 'login.html?redirect=dashboard.html';
+    }
+    return;
+  }
+
+  clearInterval(guardInterval);
+
+  if (!window.currentUser) {
+    // Not logged in
+    window.location.href = 'login.html?redirect=dashboard.html';
+    return;
+  }
+
+  if (window.currentUserRole !== 'admin') {
+    // Logged in but not admin
+    guard.querySelector('.guard-title').textContent = 'Access Denied';
+    guard.querySelector('.guard-sub').textContent   = 'You do not have admin privileges to view this page.';
+    guard.querySelector('.guard-icon').textContent  = '⛔';
+    guard.querySelector('.spinner').style.display   = 'none';
+    const btn = document.createElement('a');
+    btn.href      = 'explore.html';
+    btn.className = 'btn-teal';
+    btn.style.cssText = 'margin-top:8px;padding:10px 24px;text-decoration:none;border-radius:8px;font-weight:700;';
+    btn.textContent = '← Back to Feed';
+    guard.appendChild(btn);
+    return;
+  }
+
+  // ✅ Confirmed admin — show dashboard
+  guard.style.display = 'none';
+
+  // Set admin name in avatar
+  const name = window.currentUser.displayName || window.currentUser.email || 'A';
+  document.getElementById('adminAvatar').textContent = name.charAt(0).toUpperCase();
+
+}, 100);
+</script>
+<!-- Floating theme toggle (always visible) -->
+<button class="theme-toggle-fab" id="themeFab" title="Toggle dark/light mode">
+  <i class="bi bi-moon-stars-fill"></i>
+</button>
+<script>
+(function() {
+  var t = localStorage.getItem('ppt-theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', t);
+})();
+document.addEventListener('DOMContentLoaded', function() {
+  function syncAllToggles(theme) {
+    document.querySelectorAll('.theme-toggle').forEach(function(btn) {
+      var i = btn.querySelector('i');
+      if (i) i.className = theme === 'dark' ? 'bi bi-sun-fill' : 'bi bi-moon-stars-fill';
+      btn.title = theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
+    });
+  }
+  var current = document.documentElement.getAttribute('data-theme') || 'dark';
+  syncAllToggles(current);
+  document.querySelectorAll('.theme-toggle').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var now  = document.documentElement.getAttribute('data-theme');
+      var next = now === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('ppt-theme', next);
+      syncAllToggles(next);
+    });
+  });
+});
 </script>
 </body>
 </html>
