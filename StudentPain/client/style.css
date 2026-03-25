@@ -1,0 +1,204 @@
+/* GLOBAL */
+body {
+    font-family: "Segoe UI", sans-serif;
+    background: #0f172a;
+    color: #e2e8f0;
+    margin: 0;
+}
+
+/* CENTER (LOGIN/REGISTER) */
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* CARD */
+.card {
+    background: #1e293b;
+    padding: 25px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* HEADER */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background: #1e293b;
+    border-bottom: 1px solid #334155;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* CONTAINER */
+.container {
+    width: 90%;
+    margin: auto;
+    padding: 20px;
+}
+
+/* INPUTS */
+input,
+select {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #334155;
+    background: #0f172a;
+    color: white;
+    outline: none;
+    transition: 0.2s;
+}
+
+input:focus,
+select:focus {
+    border-color: #38bdf8;
+}
+
+/* BUTTONS */
+button {
+    padding: 10px 15px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s;
+    font-weight: 500;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+.add-btn {
+    background: #22c55e;
+    color: white;
+}
+
+.secondary {
+    background: #334155;
+    color: white;
+}
+
+.logout {
+    background: #ef4444;
+    color: white;
+}
+
+/* FORM GRID */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+/* TABLE */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th {
+    background: #334155;
+    padding: 12px;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+td {
+    padding: 12px;
+    border-bottom: 1px solid #334155;
+}
+
+tr:hover {
+    background: #1e293b;
+}
+
+/* STATUS COLORS */
+.open {
+    color: #38bdf8;
+    font-weight: bold;
+}
+
+.pending {
+    color: orange;
+    font-weight: bold;
+}
+
+.resolved {
+    color: #22c55e;
+    font-weight: bold;
+}
+
+.rejected {
+    color: #ef4444;
+    font-weight: bold;
+}
+
+/* ACTION BUTTONS */
+.btn {
+    padding: 5px 8px;
+    margin: 2px;
+    border-radius: 5px;
+}
+
+.pending-btn {
+    background: orange;
+}
+
+.resolve-btn {
+    background: #22c55e;
+}
+
+.reject-btn {
+    background: red;
+}
+
+.delete-btn {
+    background: #475569;
+}
+
+/* TEXT */
+h1,
+h2,
+h3 {
+    margin: 0 0 10px 0;
+}
+
+p {
+    color: #94a3b8;
+}
+/* STATS */
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.stat-card {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* SEARCH */
+#search {
+    width: 60%;
+    margin-right: 10px;
+}
+
+/* EMPTY + LOADING */
+#empty {
+    text-align: center;
+    padding: 20px;
+    color: #94a3b8;
+}

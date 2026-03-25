@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1774456201034,
+    "username": "Tabish Firoz",
+    "password": "$2b$10$.oWy.IU40rYU07DP81N5a.A6Ie5VPo3oFN1AVvNvUYZzq7H/6sxK6",
+    "role": "user"
+  },
+  {
+    "id": 1774456430676,
+    "username": "Tabish",
+    "password": "$2b$10$AMUcnQ8uDSdIJjI2iq1KSOO.WqrSe77qrewwWmSqBGaKZ77OqNqMS",
+    "role": "admin"
+  }
+]

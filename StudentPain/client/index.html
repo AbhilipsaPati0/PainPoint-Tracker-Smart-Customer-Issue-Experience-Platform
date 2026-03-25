@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- HEADER -->
+    <header class="header">
+      <h2>🎯 Student Pain Tracker</h2>
+
+      <div class="header-right">
+        <span id="welcome"></span>
+        <button class="logout" onclick="logout()">Logout</button>
+      </div>
+    </header>
+
+    <div class="container">
+      <!-- STATS -->
+      <div class="stats">
+        <div class="card stat-card">Total: <span id="total"></span></div>
+        <div class="card stat-card">Open: <span id="openCount"></span></div>
+        <div class="card stat-card">
+          Resolved: <span id="resolvedCount"></span>
+        </div>
+      </div>
+
+      <!-- FILTERS -->
+      <div class="card">
+        <input
+          id="search"
+          placeholder="🔍 Search title..."
+          onkeyup="fetchIssues()"
+        />
+
+        <select id="statusFilter" onchange="fetchIssues()">
+          <option value="">All Status</option>
+          <option>Open</option>
+          <option>Pending</option>
+          <option>Resolved</option>
+          <option>Rejected</option>
+        </select>
+      </div>
+
+      <!-- FORM -->
+      <div class="card form-card">
+        <h3>Add New Issue</h3>
+
+        <div class="form-grid">
+          <input id="title" placeholder="Issue Title" />
+          <input id="student" placeholder="Student Name" />
+
+          <select id="category">
+            <option>Academic</option>
+            <option>Technical</option>
+            <option>Personal</option>
+            <option>Administrative</option>
+          </select>
+
+          <select id="priority">
+            <option>Low</option>
+            <option>Medium</option>
+            <option>High</option>
+          </select>
+        </div>
+
+        <button class="add-btn" onclick="addIssue()">+ Add Issue</button>
+      </div>
+
+      <!-- TABLE -->
+      <div class="card table-card">
+        <h3>All Issues</h3>
+
+        <div id="loading" style="display: none">Loading...</div>
+        <div id="empty" style="display: none">No Issues Found</div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>User</th>
+              <th>Title</th>
+              <th>Category</th>
+              <th>Priority</th>
+              <th>Status</th>
+              <th>Created</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
