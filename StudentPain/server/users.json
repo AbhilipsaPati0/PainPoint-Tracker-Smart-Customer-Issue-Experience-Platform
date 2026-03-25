@@ -10,5 +10,17 @@
     "username": "Tabish",
     "password": "$2b$10$AMUcnQ8uDSdIJjI2iq1KSOO.WqrSe77qrewwWmSqBGaKZ77OqNqMS",
     "role": "admin"
+  },
+  {
+    "id": 1774459647672,
+    "username": "Abhilipsa",
+    "password": "$2b$10$q482xvThBs41GmjdVot07ubm5MDZgd5DrXF.xmsby2hd62JZteUwe",
+    "role": "user"
+  },
+  {
+    "id": 1774460172094,
+    "username": "Jeet",
+    "password": "$2b$10$2oSIrgnniL27HYBNYOHOJeTxSKTPZhGNN.YE4a8xVmuijPtzaeNKa",
+    "role": "user"
   }
 ]
