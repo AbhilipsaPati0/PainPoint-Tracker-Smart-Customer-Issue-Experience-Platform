@@ -10,5 +10,35 @@
     "username": "Tabish",
     "password": "$2b$10$AMUcnQ8uDSdIJjI2iq1KSOO.WqrSe77qrewwWmSqBGaKZ77OqNqMS",
     "role": "admin"
+  },
+  {
+    "id": 1774459647672,
+    "username": "Abhilipsa",
+    "password": "$2b$10$q482xvThBs41GmjdVot07ubm5MDZgd5DrXF.xmsby2hd62JZteUwe",
+    "role": "user"
+  },
+  {
+    "id": 1774460172094,
+    "username": "Jeet",
+    "password": "$2b$10$2oSIrgnniL27HYBNYOHOJeTxSKTPZhGNN.YE4a8xVmuijPtzaeNKa",
+    "role": "user"
+  },
+  {
+    "id": 1774616519151,
+    "username": "XYZ123",
+    "password": "$2b$10$NlEaOKwYyr/OA76MMunz8ueapa0WDK2KcPBQs5K3bJ4PMq3IEgveG",
+    "role": "user"
+  },
+  {
+    "id": 1774616804421,
+    "username": "ABC24",
+    "password": "$2b$10$fY9RR9tD96oIYpJgoDclZeW..n1Z5gEh1LzJKsGYn7I3Bak2Nrqui",
+    "role": "admin"
+  },
+  {
+    "id": 1774620366016,
+    "username": "sagnika04",
+    "password": "$2b$10$08NdvDuvBL6vwF3fwCXUPOIpYPk3wiVXsDbMV76JKM8oiHbEO58Li",
+    "role": "user"
   }
 ]

@@ -4,7 +4,10 @@
     <title>Dashboard</title>
     <link rel="stylesheet" href="style.css" />
   </head>
-  <body>
+
+  <!-- ✅ FIXED: ONLY ONE BODY -->
+  <body class="dashboard-page">
+
     <!-- HEADER -->
     <header class="header">
       <h2>🎯 Student Pain Tracker</h2>
@@ -16,17 +19,12 @@
     </header>
 
     <div class="container">
-      <!-- STATS -->
       <div class="stats">
-        <div class="card stat-card">Total: <span id="total"></span></div>
-        <div class="card stat-card">Open: <span id="openCount"></span></div>
-        <div class="card stat-card">
-          Resolved: <span id="resolvedCount"></span>
-        </div>
+        <div class="stat-card">📊 Total: <span id="total"></span></div>
+        <div class="stat-card">🟡 Open: <span id="openCount"></span></div>
+        <div class="stat-card">✅ Resolved: <span id="resolvedCount"></span></div>
       </div>
-
-      <!-- FILTERS -->
-      <div class="card">
+      <div class="search-bar">
         <input
           id="search"
           placeholder="🔍 Search title..."
@@ -43,7 +41,7 @@
       </div>
 
       <!-- FORM -->
-      <div class="card form-card">
+      <div class="form-card">
         <h3>Add New Issue</h3>
 
         <div class="form-grid">
@@ -68,11 +66,11 @@
       </div>
 
       <!-- TABLE -->
-      <div class="card table-card">
-        <h3>All Issues</h3>
+      <div class="table-container">
+        <h3 style="padding: 15px;">All Issues</h3>
 
-        <div id="loading" style="display: none">Loading...</div>
-        <div id="empty" style="display: none">No Issues Found</div>
+        <div id="loading" style="display: none; padding: 15px;">Loading...</div>
+        <div id="empty" style="display: none; padding: 15px;">No Issues Found</div>
 
         <table>
           <thead>
@@ -90,6 +88,7 @@
           <tbody id="tableBody"></tbody>
         </table>
       </div>
+
     </div>
 
     <script src="script.js"></script>

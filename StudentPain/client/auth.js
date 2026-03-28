@@ -56,3 +56,41 @@ async function login() {
   window.location.href = "index.html";
 }
 
+/* PASSWORD TOGGLE */
+function togglePassword() {
+  const passwordInput = document.getElementById("password");
+  const eye = document.querySelector(".eye-icon");
+
+  if (!passwordInput) return;
+
+  if (passwordInput.type === "password") {
+    passwordInput.type = "text";
+    eye.textContent = "🙈";
+  } else {
+    passwordInput.type = "password";
+    eye.textContent = "👁️";
+  }
+}
+
+/* THEME TOGGLE */
+window.addEventListener("load", function () {
+  if (localStorage.getItem("theme") === "light") {
+    document.body.classList.add("light-mode");
+    const btn = document.querySelector(".theme-btn");
+    if (btn) btn.textContent = "☀️";
+  }
+});
+
+function toggleTheme() {
+  const btn = document.querySelector(".theme-btn");
+
+  document.body.classList.toggle("light-mode");
+
+  if (document.body.classList.contains("light-mode")) {
+    localStorage.setItem("theme", "light");
+    if (btn) btn.textContent = "☀️";
+  } else {
+    localStorage.setItem("theme", "dark");
+    if (btn) btn.textContent = "🌙";
+  }
+}
