@@ -1,21 +1,72 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>Login</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body class="center">
+<body class="auth-page">
+<div class="top-navbar">
+  <div class="nav-left">
+    <h2>Student Painpoint Tracker</h2>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">About</a>
+      <a href="#">Services</a>
+      <a href="#">Contact</a>
+    </nav>
+  </div> 
+  <div class="nav-right">
+    <button class="nav-login">Login</button>
 
-<div class="card">
-  <h2>Login</h2>
+    <div class="call-box">
+      📞 <span>Call Anytime: +91 8984580114 </span>
+    </div>
+  </div>
 
-  <input id="username" placeholder="Username">
-  <input id="password" type="password" placeholder="Password">
+</div>
+<button onclick="toggleTheme()" class="theme-btn">🌙</button>
 
-  <button onclick="login()">Login</button>
+<div class="main-container">
+  <div class="left-panel">
+    <h1>GROW WITH US😊</h1>
+    <h2>Smart Customer Issue Experience</h2>
+    <p>Track issues, improve experience,<br>and deliver better services.</p>
+  </div>
+  <div class="right-panel">
+    <div class="login-card">
 
-  <p>Don't have an account?</p>
-  <button onclick="goRegister()" class="secondary">Register</button>
+      <h2>Login 😊</h2>
+      <p class="subtitle">Access your dashboard</p>
+
+      <form onsubmit="login(event)" action="#">
+
+        <div class="input-group">
+          <label>Username</label>
+          <input type="text" id="username" placeholder="Enter username" required>
+        </div>
+
+       <div class="input-group password-box">
+  <label>Password</label>
+
+  <div class="password-wrapper">
+    <input type="password" id="password" placeholder="Enter password" required>
+    <span class="eye-icon" onclick="togglePassword()">👁️</span>
+  </div>
+
+</div>
+
+        <button type="submit">Login</button>
+      </form>
+
+      <p class="bottom-text">
+        Don't have an account?
+        <a href="register.html">Create Account</a>
+      </p>
+
+    </div>
+  </div>
+
 </div>
 
 <script src="auth.js"></script>

@@ -1,26 +1,89 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>Register</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body class="center">
 
-<div class="card">
-  <h2>Register</h2>
+<!-- ✅ ADDED CLASS HERE -->
+<body class="auth-page">
+  <!-- ===== NAVBAR START ===== -->
+<div class="top-navbar">
 
-  <input id="username" placeholder="Username">
-  <input id="password" type="password" placeholder="Password">
+  <!-- LEFT -->
+  <div class="nav-left">
+    <h2>Student Painpoint Tracker</h2>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">About</a>
+      <a href="#">Services</a>
+      <a href="#">Contact</a>
+    </nav>
+  </div>
 
-  <select id="role">
-    <option value="user">User</option>
-    <option value="admin">Admin</option>
-  </select>
+  <!-- RIGHT -->
+  <div class="nav-right">
+    <button class="nav-login">Login</button>
 
-  <button onclick="register()">Register</button>
+    <div class="call-box">
+      📞 <span>Call Anytime: +91 8984580114</span>
+    </div>
+  </div>
 
-  <p>Already have account?</p>
-  <button onclick="goLogin()" class="secondary">Login</button>
+</div>
+<!-- ===== NAVBAR END ===== -->
+<button onclick="toggleTheme()" class="theme-btn">🌙</button>
+<div class="main-container">
+
+  <!-- Left Panel -->
+  <div class="left-panel">
+    <h1>Join Us 🎉</h1>
+    <h2>Smart Customer Issue Experience</h2>
+    <p>Create your account and start managing<br>customer experience easily.</p>
+  </div>
+
+  <!-- Right Panel -->
+  <div class="right-panel">
+    <div class="login-card">
+
+      <h2>Create Account 😎</h2>
+      <p class="subtitle">Get started in seconds</p>
+
+      <form onsubmit="register(event)" action="#">
+
+        <div class="input-group">
+          <label>Username</label>
+          <input type="text" id="username" placeholder="Enter username" required>
+        </div>
+<div class="input-group password-box">
+  <label>Password</label>
+
+  <div class="password-wrapper">
+    <input type="password" id="password" placeholder="Enter password" required>
+    <span class="eye-icon" onclick="togglePassword()">👁️</span>
+  </div>
+
+</div>
+        <div class="input-group">
+          <label>Role</label>
+          <select id="role">
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
+
+        <button type="submit">Register</button>
+      </form>
+
+      <p class="bottom-text">
+        Already have an account?
+        <a href="login.html">Login</a>
+      </p>
+
+    </div>
+  </div>
+
 </div>
 
 <script src="auth.js"></script>
