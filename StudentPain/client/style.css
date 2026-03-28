@@ -1,4 +1,4 @@
-/* ================= GLOBAL ================= */
+
 * {
     margin: 0;
     padding: 0;
@@ -10,8 +10,6 @@ body {
     background: #0f172a;
     color: #e2e8f0;
 }
-
-/* ================= AUTH PAGES ONLY ================= */
 
 body.auth-page {
     background: url("bg.jpg") no-repeat center center/cover;
@@ -171,11 +169,11 @@ body.auth-page .bottom-text a {
 }
 
 /* THEME BUTTON */
-.theme-btn {
+body.auth-page .theme-btn {
     position: fixed;
     top: 20px;
     right: 20px;
-    z-index: 999;
+    z-index: 2000;
 
     border-radius: 50%;
     padding: 10px;
@@ -407,14 +405,10 @@ td:last-child {
     padding: 8px 12px;
     border-radius: 8px;
 }
-
-/* ================= EMPTY ================= */
 #empty {
     padding: 20px;
     text-align: center;
 }
-/* ===== FORCE FIX SEARCH + FILTER ===== */
-
 #search {
     width: 260px !important;
     padding: 10px 14px !important;
@@ -491,14 +485,13 @@ td:last-child {
     gap: 20px;
 }
 
-/* LOGIN BUTTON */
 .nav-login {
     padding: 8px 16px;
     border-radius: 8px;
     border: none;
 
     background: linear-gradient(135deg, #3b82f6, #6366f1);
-    color: white;
+    color: rgb(207, 248, 250);
     cursor: pointer;
     transition: 0.3s;
 }
@@ -513,7 +506,7 @@ td:last-child {
     align-items: center;
     gap: 3px;
 
-    color: #e2e8f0;
+    color: #a67bf5;
     font-size: 20px;
 }
 
